@@ -39,7 +39,7 @@ def default():
     print(process_input())
     user_input, name, profession = process_input()
     content = handle_click(name)
-    message = f"my name is {name} and i am {profession}, and my email is {user_input}"
+    message = f"my name is {name} and i am {profession} and my email Id is {user_input}"
     print(content)
     return render_template('assistant.html', title=title, message=message, content=content)
 
