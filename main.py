@@ -1,4 +1,4 @@
-from flask import Flask, render_template,jsonify, Request
+from flask import Flask, render_template, jsonify, Request
 
 app = Flask(__name__)
 
@@ -8,22 +8,36 @@ def hello_world():
     return 'Hello, World!'
 
 
+@app.route('/home', methods=['POST'])
+def home():
+    return 'Hello, World!'
+
+
 @app.route('/greet/<name>')
 def greet(name):
     return f'Hello, {name}!'
 
 
-@app.route('/handle_click', methods=['POST'])
-def handle_click():
-    new_content = "Content updated after clicking the button."
+def handle_click(name):
+    new_content = f'hello {name}'
     return new_content
 
 
 @app.route('/index')
-def index():
+def default():
     title = "resume"
-    content= handle_click()
-    message = "my name is kunal and i am software developer"
+    content = handle_click('unknown')
+    message = f"my name is kunal and i am software developer"
+    name = "kuanl"
+    print(content)
+    return render_template('home.html', title=title, message=message, name=name, content=content)
+
+@app.route('/index/<user>')
+def index(user):
+    title = "resume"
+    content = handle_click(user)
+
+    message = f"my name is kunal and i am software developer"
     name = "kuanl"
     print(content)
     return render_template('home.html', title=title, message=message, name=name, content=content)
