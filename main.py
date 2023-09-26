@@ -1,11 +1,11 @@
-from flask import Flask, render_template, jsonify, Request
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return render_template('form.html')
 
 
 @app.route('/home', methods=['POST'])
@@ -19,26 +19,29 @@ def greet(name):
 
 
 def handle_click(name):
+    print(process_input())
+    user_input, name, profession = process_input()
     new_content = f'hello {name}'
     return new_content
 
 
-@app.route('/index')
-def default():
-    title = "resume"
-    content = handle_click('unknown')
-    message = f"my name is kunal and i am software developer"
-    name = "kuanl"
-    print(content)
-    return render_template('home.html', title=title, message=message, name=name, content=content)
+def process_input():
+    user_input = request.form.get('email')
+    name = request.form.get('name')
+    profession = request.form.get('job')
+    print(profession)
+    return user_input, name, profession
 
-@app.route('/index/<user>')
-def index(user):
-    title = "resume"
-    content = handle_click(user)
-    message = f"my name is {user} and i am software developer"
+
+@app.route('/index', methods=['POST'])
+def default():
+    title = "personal assistant"
+    print(process_input())
+    user_input, name, profession = process_input()
+    content = handle_click(name)
+    message = f"my name is {name} and i am {profession}, and my email is {user_input}"
     print(content)
-    return render_template('home.html', title=title, message=message, content=content)
+    return render_template('index.html', title=title, message=message, content=content)
 
 
 if __name__ == '__main__':
