@@ -36,11 +36,9 @@ def default():
 def index(user):
     title = "resume"
     content = handle_click(user)
-
-    message = f"my name is kunal and i am software developer"
-    name = "kuanl"
+    message = f"my name is {user} and i am software developer"
     print(content)
-    return render_template('home.html', title=title, message=message, name=name, content=content)
+    return render_template('home.html', title=title, message=message, content=content)
 
 
 if __name__ == '__main__':
