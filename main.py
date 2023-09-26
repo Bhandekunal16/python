@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return render_template('form.html')
+    return render_template('index.html')
 
 
 @app.route('/home', methods=['POST'])
@@ -41,7 +41,7 @@ def default():
     content = handle_click(name)
     message = f"my name is {name} and i am {profession}, and my email is {user_input}"
     print(content)
-    return render_template('index.html', title=title, message=message, content=content)
+    return render_template('assistant.html', title=title, message=message, content=content)
 
 
 if __name__ == '__main__':

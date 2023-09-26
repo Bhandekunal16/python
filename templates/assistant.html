@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume</title>
+  </head>
+  <body>
+    <h1 style="text-align: center">{{ title }}</h1>
+    <p style="text-align: center">{{ message }}</p>
+
+    <p style="text-align: center">
+      click if you want know about me
+      <button onclick="showContent()">click</button>
+    </p>
+    <div style="display: flex; justify-content: center">
+      <div
+        id="content"
+        style="
+          display: none;
+          text-align: center;
+          background-color: #333;
+          color: white;
+          width: 30vw;
+          height: auto;
+        "
+      >
+        {{content}}
+      </div>
+    </div>
+
+    <script>
+      node = document.getElementById("content");
+      function showContent() {
+        node.style.display = "block";
+      }
+    </script>
+  </body>
+</html>
