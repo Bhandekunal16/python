@@ -6,7 +6,16 @@
     <title>Resume</title>
   </head>
   <body>
-    <div style="display: flex; justify-content: center; padding: 10%; background-color: whitesmoke;">
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        background-color: whitesmoke;
+        width: auto;
+        height: fit-content;
+        padding: 15%;
+      "
+    >
       <form method="POST" action="/index">
         <label for="name">Name :</label>
         <input type="text" id="name" name="name" required />
@@ -17,5 +26,8 @@
         <button type="submit">Submit</button>
       </form>
     </div>
+    <form method="POST" action="/login">
+      <button type="submit">Login</button>
+    </form>
   </body>
 </html>

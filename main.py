@@ -23,14 +23,34 @@ class Neo4jDatabase:
                 self._create_node, name, email, profession)
         return result
 
+    def match_node(self, name, email):
+        with self._driver.session() as session:
+            result = session.write_transaction(self._match_node, name, email)
+        return result
+
     @staticmethod
     def _create_node(tx, name, email, profession):
         query = (
-            "CREATE (n:Person {name: $name, email: $email, profession: $profession})"
+            "merge (n:Person {name: $name, email: $email, profession: $profession})"
             "RETURN id(n)"
         )
         result = tx.run(query, name=name, email=email, profession=profession)
         return result.single()[0]
+
+    def _match_node(self, tx, name, email):
+        query = (
+            "MATCH (n:Person {name: $name, email: $email})"
+            "RETURN n"
+        )
+        result = tx.run(query, name=name, email=email)
+        records = result.data()
+
+        if records:
+            nodes = [record['n'] for record in records]
+            print("Matched nodes:", nodes[0]['name'])
+            return nodes
+        else:
+            print("No matching nodes found.")
 
 
 # Retry 3 times with a 1-second delay between retries
@@ -49,6 +69,26 @@ except neo4j.exceptions.ServiceUnavailable:
 @app.route('/')
 def hello_world():
     return render_template('index.html')
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    return render_template('login.html')
+
+
+@app.route('/login/index', methods=['POST'])
+def dashboard():
+    user_input = request.form.get('email')
+    name = request.form.get('name')
+    db = Neo4jDatabase(uri, user, password)
+    data = db.match_node(name, user_input)
+    content = data[0][name]
+    print(type, content)
+    if data[0]['name'] == name:
+        print('true')
+        return render_template('assistant.html')
+    else:
+        return render_template('index.html')
 
 
 @app.route('/home', methods=['POST'])
