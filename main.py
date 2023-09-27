@@ -82,8 +82,6 @@ def dashboard():
     name = request.form.get('name')
     db = Neo4jDatabase(uri, user, password)
     data = db.match_node(name, user_input)
-    content = data[0][name]
-    print(type, content)
     if data[0]['name'] == name:
         print('true')
         return render_template('assistant.html')
