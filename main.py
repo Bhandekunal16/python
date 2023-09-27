@@ -45,6 +45,9 @@ try:
 except neo4j.exceptions.ServiceUnavailable:
     print("Failed to connect to Neo4j after multiple retries.")
 
+@app.route('/')
+def hello_world():
+    return 'hello'
 
 @app.route('/')
 def hello_world():
