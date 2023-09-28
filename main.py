@@ -84,7 +84,9 @@ def dashboard():
     data = db.match_node(name, user_input)
     if data[0]['name'] == name:
         print('true')
-        return render_template('assistant.html')
+        content = handle_click(name)
+        message = f"my name is {name} and my email Id is {user_input}"
+        return render_template('assistant.html', content=content, message=message,)
     else:
         return render_template('index.html')
 
