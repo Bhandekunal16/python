@@ -44,19 +44,35 @@ def superAdmin():
     name = request.form.get('name')
     print(name, user_input)
     db = Neo4jDatabase(uri, user, password)
-    data = db.Robotic_dashboard(user_input)
-    print(data)
-    if data == "none":
-        print('hello')
-        return render_template('failedSuperAdmin.html')
-    elif data[0]['email'] == user_input:
-        print('true')
-        content = handle_click(name)
-        message = f"hello {name}"
-        return render_template('superAdminDashboard.html', content=content, message=message,)
+
+    try:
+        data = db.Robotic_dashboard(user_input)
+        print(data)
+
+        if not data:
+            print('hello')
+            return render_template('failedSuperAdmin.html')
+
+        if data[0].get('email') == user_input:
+            print('true')
+            content = handle_click(name)
+            message = f"hello {name}"
+            return render_template('superAdminDashboard.html', content=content, message=message)
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+    print('false')
+    return render_template('index.html')
+
+
+@app.route('/login/SuperAdmin/terminal', methods=['POST'])
+def terminal():
+    input = request.form.get('input')
+    if input == 'hello':
+        return 'hello'
     else:
-        print('false')
-        return render_template('index.html')
+        return 'i dont understand'
 
 
 @app.route('/home', methods=['POST'])
