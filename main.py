@@ -48,7 +48,7 @@ def superAdmin():
     print(data)
     if data == "none":
         print('hello')
-        return render_template('index.html')
+        return render_template('failedSuperAdmin.html')
     elif data[0]['email'] == user_input:
         print('true')
         content = handle_click(name)
