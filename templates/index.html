@@ -4,30 +4,87 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resume</title>
-  </head>
-  <body>
-    <div
-      style="
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
         display: flex;
         justify-content: center;
-        background-color: whitesmoke;
-        width: auto;
-        height: fit-content;
-        padding: 15%;
-      "
-    >
+        align-items: center;
+        height: 100vh;
+      }
+
+      .form-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"] {
+        width: 90%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      button[type="submit"] {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #555;
+      }
+      button[type="normal"] {
+        background-color: transparent;
+        float: right;
+        color: #333;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h1>Resume Submission</h1>
       <form method="POST" action="/index">
-        <label for="name">Name :</label>
+        <label for="name">Name:</label>
         <input type="text" id="name" name="name" required />
-        <label for="email">Gmail :</label>
+        <label for="email">Gmail:</label>
         <input type="text" id="email" name="email" required />
-        <label for="job">profession :</label>
+        <label for="job">Profession:</label>
         <input type="text" id="job" name="job" required />
         <button type="submit">Submit</button>
       </form>
+      <div>
+        <form method="POST" action="/login">
+          <button type="normal">Login</button>
+        </form>
+      </div>
     </div>
-    <form method="POST" action="/login">
-      <button type="submit">Login</button>
-    </form>
   </body>
 </html>
