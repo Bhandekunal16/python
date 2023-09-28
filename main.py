@@ -28,6 +28,11 @@ class Neo4jDatabase:
             result = session.write_transaction(self._match_node, name, email)
         return result
 
+    def Robotic_dashboard(self, email):
+        with self._driver.session() as session:
+            result = session.write_transaction(self._Robotic_dashboard, email)
+        return result
+
     @staticmethod
     def _create_node(tx, name, email, profession):
         query = (
@@ -51,6 +56,22 @@ class Neo4jDatabase:
             return nodes
         else:
             print("No matching nodes found.")
+
+    def _Robotic_dashboard(self, tx, email):
+        query = (
+            "match (n:user {email: $email}) return n"
+        )
+        result = tx.run(query, email=email)
+        records = result.data()
+
+        if records:
+            nodes = [record['n'] for record in records]
+            print("Matched nodes:", nodes[0]['name'])
+            return nodes
+        else:
+            msg = "none"
+            print("No matching nodes found.")
+            return msg
 
 
 # Retry 3 times with a 1-second delay between retries
@@ -76,6 +97,11 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/login/superAdmin', methods=['POST'])
+def superAdminLogin():
+    return render_template('superAdminLogin.html')
+
+
 @app.route('/login/index', methods=['POST'])
 def dashboard():
     user_input = request.form.get('email')
@@ -88,6 +114,27 @@ def dashboard():
         message = f"my name is {name} and my email Id is {user_input}"
         return render_template('assistant.html', content=content, message=message,)
     else:
+        return render_template('index.html')
+
+
+@app.route('/login/SuperAdmin/dashboard', methods=['POST'])
+def superAdmin():
+    user_input = request.form.get('email')
+    name = request.form.get('name')
+    print(name, user_input)
+    db = Neo4jDatabase(uri, user, password)
+    data = db.Robotic_dashboard(user_input)
+    print(data)
+    if data == "none":
+        print('hello')
+        return render_template('index.html')
+    elif data[0]['email'] == user_input:
+        print('true')
+        content = handle_click(name)
+        message = f"hello {name}"
+        return render_template('superAdminDashboard.html', content=content, message=message,)
+    else:
+        print('false')
         return render_template('index.html')
 
 
