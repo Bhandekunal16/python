@@ -71,6 +71,8 @@ def terminal():
     input = request.form.get('input')
     if input == 'hello':
         return 'hello'
+    if input == 'table':
+        return 'table'
     else:
         return 'i dont understand'
 
